@@ -27,13 +27,17 @@ userSchema.methods.loadData = function(data) {
 
     this.username = data.username;
     this.email = data.email;
-    this.password = data.password || this.password;
+    this.password = data.password;
 
     var currentDate = new Date();
     this.dateModified = currentDate;
     this.dateCreated = this.dateCreated || currentDate;
 
 };
+
+userSchema.path('username').validate(function (value) {
+    return (value.length <= 20 && value.length >= 4);
+});
 
 userSchema.methods.toPublic = function() {
     var user = this.toObject();

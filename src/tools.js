@@ -2,7 +2,7 @@ var User = require('../models/user');
 var Follow = require('../models/follow');
 
 function error(res,err) {
-  res.json({err: err});
+  return res.json({err: err});
 }
 
 var models = {

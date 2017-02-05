@@ -103,8 +103,8 @@ module.exports = function profile() {
         function (follow) {
           res.json(follow);
         },
-        function (reason) {
-          res.json('Could not create follow: ' + reason);
+        function (err) {
+          tools.error(err,'Could not create follow: ' + reason);
         }
       );
     });
@@ -120,7 +120,7 @@ module.exports = function profile() {
       .exec(
         function (err, follow) {
           if (err) throw err;
-          if (!follow) {
+          if (follow.result.n == 0) {
             return tools.error(res,"could not delete follow");
           }
           res.json(follow);
@@ -136,7 +136,7 @@ module.exports = function profile() {
         return res.json(user.toPublic());
       },
       function(err) {
-        return res.json(err);
+        return tools.error(res,'Could not create new user: ' + err);
       }
     );
   });
@@ -149,7 +149,7 @@ module.exports = function profile() {
           return res.json(user.toPublic());
         },
         function(err) {
-          return res.json(err);
+          return tools.error(res,'Could not update user: ' + err);
         }
       );
     });
