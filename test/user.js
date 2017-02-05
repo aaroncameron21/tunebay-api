@@ -143,6 +143,7 @@ describe('User endpoints', function () {
                 done();
             });
     });
+
     it('POST /user/:userId/unfollow unfollows user', function(done) {
 
         request(server)
@@ -154,6 +155,28 @@ describe('User endpoints', function () {
                 expect(response.body.n).to.equal(1);
                 done();
             });       
+    });
+
+    it('GET /user/all should return all users', function(done) {
+        request(server)
+            .get('/user/all')
+            .expect(200)
+            .end(function(err,response) {
+                expect(response.body.length).to.equal(2);
+                expect(response.body[0].username).to.equal('updated');
+                expect(response.body[1].username).to.equal('username2');
+                done();
+            });
+    });
+
+    it('GET /user should return error', function(done) {
+        request(server)
+            .get('/user')
+            .expect(200)
+            .end(function(err,response) {
+                expect(response.body.err).to.exist;
+                done();
+            });
     });
 
 

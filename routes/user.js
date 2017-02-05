@@ -18,15 +18,15 @@ var models = {
   User: User,
 };
 
-function confirm(user_id, type, cb) {
+function confirm(id, type, cb) {
   var model = models[type];
   if (!model) {
     return error("Model '" + type + "' not found");
   }
-  model.findById(user_id, function (err, user) {
+  model.findById(id, function (err, item) {
     if (err) throw err;
-    if (!user) {
-      return cb(type + " '" + user_id + "' does not exist.");
+    if (!item) {
+      return cb(type + " '" + id + "' does not exist.");
     }
     cb();
   });
