@@ -20,10 +20,10 @@ if (process.test) {
         });
     });
 } else {
-    mongoose.connect('mongodb://localhost:27017/tunebay',function(err) { /* codecov skip */
-        console.log("> Mongoose Ready"); /* codecov skip */
-        if (err) throw err; /* codecov skip */
-    }); /* codecov skip */
+    mongoose.connect('mongodb://localhost:27017/tunebay',function(err) {
+        console.log("> Mongoose Ready");
+        if (err) throw err; 
+    });
 }
 
 var app = express();

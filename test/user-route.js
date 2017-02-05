@@ -169,10 +169,10 @@ describe('User endpoints', function () {
             .get('/user/all')
             .expect(200)
             .end(function(err,response) {
-                expect(response.body.length).to.equal(2);
-                expect(response.body[0].username).to.equal('updated');
-                expect(response.body[1].username).to.equal('username2');
-                done();
+                User.find(function(err,allUsers) {
+                    expect(response.body.length).to.equal(allUsers.length);
+                    done();
+                });
             });
     });
 

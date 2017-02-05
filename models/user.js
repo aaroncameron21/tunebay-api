@@ -47,16 +47,6 @@ userSchema.methods.toPublic = function() {
     return user;
 };
 
-userSchema.statics.random = function(callback) {
-  this.count(function(err, count) {
-    if (err) {
-      return callback(err);
-    }
-    var rand = Math.floor(Math.random() * count);
-    this.findOne().skip(rand).exec(callback);
-  }.bind(this));
-};
-
 userSchema.virtual('isLocked').get(function() {
     // check for a future lockUntil timestamp
     return !!(this.lockUntil && this.lockUntil > Date.now());

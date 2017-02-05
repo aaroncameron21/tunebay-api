@@ -8,6 +8,15 @@ var Project = require('../models/project');
 
 describe('Server', function () {
 
+    // process.test = false;
+    // var tServer = require('../server');
+    // it('responds to /', function(done) {
+    //     request(tServer)
+    //         .get('/')
+    //         .expect(200, done);
+    // });
+    // tServer.close();
+
     process.test = true;
     var server = require('../server');
 
