@@ -102,10 +102,10 @@ module.exports = function profile() {
       follow.save().then(
         function (follow) {
           res.json(follow);
-        },
-        function (err) {
-          tools.error(err,'Could not create follow: ' + reason);
         }
+        // function (err) {
+        //   tools.error(err,'Could not create follow: ' + reason);
+        // }
       );
     });
   });

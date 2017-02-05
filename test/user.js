@@ -129,6 +129,17 @@ describe('User endpoints', function () {
         );
     });
 
+    it('POST /user/:userId/follow to return error if exists already', function(done) {
+        request(server)
+            .post('/user/' + userId + '/follow')
+            .send({ follow_id: userId2, type: 'User' })
+            .expect(200)
+            .end(function(err, response) {
+                expect(response.body.err).to.exist;
+                done();
+            });       
+    });
+
     it('GET /user/:userId/following gets users that user is following', function(done) {
         request(server)
             .get('/user/' + userId + '/following')
