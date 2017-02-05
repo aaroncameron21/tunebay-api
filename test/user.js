@@ -100,7 +100,6 @@ describe('User endpoints', function () {
     });
 
     it('POST /user/:userId/follow follows user', function(done) {
-
         var user = new User();
         user.loadData({ username: 'username2', email: 'test2@email.com', password: 'test' });
         user.save().then(
@@ -145,7 +144,6 @@ describe('User endpoints', function () {
     });
 
     it('POST /user/:userId/unfollow unfollows user', function(done) {
-
         request(server)
             .post('/user/' + userId + '/unfollow')
             .send({ follow_id: userId2, type: 'User' })
@@ -177,6 +175,17 @@ describe('User endpoints', function () {
                 expect(response.body.err).to.exist;
                 done();
             });
+    });
+
+    it('POST /user/:userId/follow returns error with incorrect type', function(done) {
+        request(server)
+            .post('/user/' + userId + '/follow')
+            .send({ follow_id: userId2, type: 'Wrong' })
+            .expect(200)
+            .end(function(err, response) {
+                expect(response.body.err).to.exist;
+                done();
+            });       
     });
 
 

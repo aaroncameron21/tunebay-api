@@ -6,33 +6,12 @@ var extend = require('xtend');
 var xlsx = require('xlsx');
 const objectAssign = require('object-assign');
 var async = require('async');
+var tools = require('../src/tools');
 
 var User = require('../models/user');
 var Follow = require('../models/follow');
 
-function error(err) {
-  _res.json({err: err});
-}
 
-var models = {
-  User: User,
-};
-
-function confirm(id, type, cb) {
-  var model = models[type];
-  if (!model) {
-    return error("Model '" + type + "' not found");
-  }
-  model.findById(id, function (err, item) {
-    if (err) throw err;
-    if (!item) {
-      return cb(type + " '" + id + "' does not exist.");
-    }
-    cb();
-  });
-}
-
-var _req,_res;
 module.exports = function profile() {
 
   var router = express.Router();
@@ -40,11 +19,6 @@ module.exports = function profile() {
   router.use(bodyParser.urlencoded({ extended: true }));
   router.use(bodyParser.json());
   // router.use(csurf({ cookie: true }));
-  router.use(function(req,res,next) {
-    _req = req;
-    _res = res;
-    next();
-  });
 
   router.get('/', function(req, res) {
     res.json({
@@ -93,10 +67,16 @@ module.exports = function profile() {
   router.post('/:user_id/follow', function(req, res) {
     async.parallel([
       function (cb) {
-        confirm(req.params.user_id, 'User', cb);
+        tools.confirm(req.params.user_id, 'User', function(err){
+          if (err) return tools.error(res,err);
+          cb();
+        });
       },
       function (cb) {
-        confirm(req.body.follow_id, req.body.type, cb);
+        tools.confirm(req.body.follow_id, req.body.type, function(err){
+          if (err) return tools.error(res,err);
+          cb();
+        });
       },
       function (cb) {
         Follow.findOne({
@@ -112,7 +92,7 @@ module.exports = function profile() {
         });
       },
     ], function (err) {
-      if (err) return error(err);
+      if (err) return tools.error(res,err);
       var follow = new Follow();
       follow.loadData({
         from: req.params.user_id,
@@ -141,7 +121,7 @@ module.exports = function profile() {
         function (err, follow) {
           if (err) throw err;
           if (!follow) {
-            return error("could not delete follow");
+            return tools.error(res,"could not delete follow");
           }
           res.json(follow);
         }
