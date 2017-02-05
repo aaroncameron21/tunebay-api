@@ -3,6 +3,7 @@ var http = require('http');
 var https = require('https');
 var async = require('async');
 var mongoose = require('mongoose');
+var exec = require('child_process').exec;
 
 var express = require('express');
 
@@ -10,18 +11,20 @@ var Follow = require('./models/follow');
 var Project = require('./models/project');
 var User = require('./models/user');
 
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min;
-}
-
-
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/tunebay',function(err) {
-    if (err) throw err;
-    // console.log("> Mongoose Ready");
-});
+if (process.test) {
+    exec('mongo tunebay-test --eval \"db.dropDatabase();\"', function(err, stdout, stderr) {
+        if (err) throw err;
+        mongoose.connect('mongodb://localhost:27017/tunebay-test',function(err) {
+            if (err) throw err;
+        });
+    });
+} else {
+    mongoose.connect('mongodb://localhost:27017/tunebay',function(err) {
+        console.log("> Mongoose Ready");
+        if (err) throw err;
+    });
+}
 
 var app = express();
 

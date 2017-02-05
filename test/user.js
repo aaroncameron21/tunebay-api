@@ -5,39 +5,16 @@ var User = require('../models/user');
 var Follow = require('../models/follow');
 var Project = require('../models/project');
 
-// describe('Top level routes', function () {
-
-//   var server;
-//   beforeEach(function () {
-//     server = require('../server');
-//   });
-//   afterEach(function () {
-//     server.close();
-//   });
-
-//   it('Responds to /', function testSlash(done) {
-//     request(server)
-//         .get('/')
-//         .expect(200, done);
-//   });
-
-//   it('Responds 404 to routes not found', function testPath(done) {
-//     request(server)
-//       .get('/foo/bar')
-//       .expect(404, done);
-//   });
-// });
-
 describe('User endpoints', function () {
 
-    // var server;
     // beforeEach(function () {
     //     server = require('../server');
     // });
     // afterEach(function () {
     //     server.close();
     // });
-
+    
+    process.test = true;
     var server = require('../server');
 
     var userId;
@@ -220,12 +197,6 @@ describe('User endpoints', function () {
             });       
     });
 
-
     server.close();
 
-//   it('Responds 404 to routes not found', function testPath(done) {
-//     request(server)
-//       .get('/foo/bar')
-//       .expect(404, done);
-//   });
 });
