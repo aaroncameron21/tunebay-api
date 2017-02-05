@@ -1,0 +1,28 @@
+{
+  "name": "tunebay-api",
+  "version": "1.0.0",
+  "description": "API for tunebay",
+  "main": "server.js",
+  "private": true,
+  "scripts": {
+    "test": "node_modules/mocha/bin/_mocha"
+  },
+  "author": "Aaron Cameron",
+  "dependencies": {
+    "async": "^2.1.4",
+    "bcrypt": "^1.0.2",
+    "body-parser": "^1.15.2",
+    "chai": "^3.5.0",
+    "cookie-parser": "^1.4.3",
+    "csurf": "^1.9.0",
+    "express": "^4.14.0",
+    "mocha": "^3.2.0",
+    "mongodb": "^2.2.2",
+    "mongoose": "^4.8.1",
+    "mongoose-schema-extend": "0.2.0",
+    "object-assign": "^4.1.0",
+    "supertest": "^3.0.0",
+    "xlsx": "^0.8.0",
+    "xtend": "^4.0.1"
+  }
+}
